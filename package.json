@@ -7,7 +7,7 @@
     "build": "babel src --presets babel-preset-es2015 --out-dir dist",
     "prepublish": "npm run build"
   },
-   "repository": {
+  "repository": {
     "type": "git",
     "url": "git@github.com:nhtua/paralidate.git"
   },

@@ -1,15 +1,13 @@
-# Paralidate - Parameters Validate(r) for Koa2 Router
+# Paralidate - Parameters Validator for Koa Router
 
-`Paralidate` makes a middelware, which validates the request's data include ctx.params and ctx.request.body
+Paralidate makes a Koa middelware, which validates the request's data include `ctx.params` and `ctx.request.body`
+If the request is valid then Koa continues run the next() middleware.
+Else, Paralidate stops the request and throw an 409 Http Error.
 
-If the request is valid then Koa continue run next() middleware.
-
-Else, `Paralidate` stops the request and throw an 409 Http Error.
-
-`Paralidate` use [Parameter](https://github.com/node-modules/parameter) for validation function.
+Paralidate uses [Parameter](https://github.com/node-modules/parameter) for validating function.
 
 ## Required
-Paralidate will check `ctx.params` and `ctx.request.body`, so it assumes you already used koa-router and koa-bodyparser. 
+Paralidate will check `ctx.params` and `ctx.request.body`, so it assumes you already used **koa-router** and **koa-bodyparser**. 
 - [koa-router](https://github.com/alexmingoia/koa-router)
 - [koa-bodyparser](https://github.com/koajs/bodyparser)
 
@@ -48,8 +46,7 @@ console.log(`API Server started at http://localhost:3000`);
 
 ### Install
 
-- Install 
-
+Install 
 ```shell
 npm install paralidate --save
 
@@ -58,17 +55,17 @@ npm install paralidate --save
 yarn add paralidate
 ```
 
-- Import
+Import
 ```ES6
 import paralidate from 'paralidate';
 ```
-
+or 
 ```ES5
 var paralidate = require('paralidate');
 ```
 
 
-### Validate for all routers
+### Validate for all route
 To apply a rule for all route, place it after the `router` middleware:
 
 ```ES6
@@ -96,9 +93,9 @@ app
 
 `.user(validator)` ensures all routers must be included the param `key`, which is a string of 32 characters.
 
-### Validate for specific routers
+### Validate for specific route
 
-To apply the validator for specific router, place it before the route middelware 
+To apply the validator for specific router, place it before the router middelware 
 
 ```ES6
 const validator = paralidate({
