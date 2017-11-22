@@ -23,8 +23,13 @@ function paralidate(rule, box, noOutDetail = true) {
 		}
 		let keys = Object.keys(rule);
 		for(let key of keys){
-			if (source[key] !== undefined)
-				data[key] = source[key];
+			if (source[key] !== undefined){
+				if ( isNaN(source[key]) ) {
+					data[key] = source[key];
+				} else {
+					data[key] = 1*source[key];
+				}
+			}
 		}
 		let error = par.validate(rule, data);
 		if (error){
