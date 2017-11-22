@@ -1,4 +1,4 @@
-#Paralidate - Parameters Validate(r) for Koa2 Router
+# Paralidate - Parameters Validate(r) for Koa2 Router
 
 `Paralidate` makes a middelware, which validates the request's data include ctx.params and ctx.request.body
 
