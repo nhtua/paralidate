@@ -1,0 +1,26 @@
+{
+  "name": "paralidate",
+  "version": "1.0.0",
+  "description": "Koa params validator",
+  "main": "./dist/index.js",
+  "scripts": {
+    "build": "babel src --presets babel-preset-es2015 --out-dir dist",
+    "prepublish": "npm run build"
+  },
+  "keywords": [
+    "koa",
+    "validate",
+    "validator",
+    "middleware"
+  ],
+  "author": "nhtua <hoangtua.vn@gmail.com> (http://webfaver.com)",
+  "license": "MIT",
+  "dependencies": {
+    "parameter": "^2.2.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-plugin-transform-async-to-generator": "^6.24.1",
+    "babel-preset-es2015": "^6.24.1"
+  }
+}
