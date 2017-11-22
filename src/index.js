@@ -28,7 +28,7 @@ function paralidate(rule, box, noOutDetail = true) {
 		}
 		let error = par.validate(rule, data);
 		if (error){
-			if (node-modules){
+			if (noOutDetail){
 				ctx.throw(409, "Request "+box+" is invalid.");
 			} else {
 				ctx.throw(409, "Request "+box+" is invalid. \n\nDETAIL\n"+ JSON.stringify(error) );
