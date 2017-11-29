@@ -5,8 +5,10 @@ import Parameter from 'parameter';
  * If the request is valid then Koa continue run next() middleware.
  * Else, `Paralidate` stops the request and throw an 409 Http Error.
  * @param  {Object} rule :  See Parameter rule configuration https://github.com/node-modules/parameter
- * @param  {String} box: <"params"|"body"> describe how to get data from ctx. "params" to get from ctx.params, "body" to get from ctx.request.body
- * @param {Boolean} noOutDetail: If it's true, ctx will throw the validator errors within the response body. And vice versa.
+ * @param  {Object} opts: Config Options 
+ *                  opts.box: < "params" | "box" | callback function > the place to get data. Default is "params"
+ *                  opts.outputType: < "simple" | "json" | "complex">. Default is 'simple'
+ *                  opts.errorCode: HTTP Error Code. Default is 409
  * @return {Async Function} A middleware for Koa2
  */
 
