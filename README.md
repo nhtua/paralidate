@@ -42,10 +42,10 @@ const validator = paralidate(rule, opts);
 Paralidate is a validator factory. It accepts 2 arguments:
 - rule: An object that contains all rules following [The Parameter Rules](https://github.com/node-modules/parameter)
 - opts: Middleware configurations
-  + opts.box: ["params" | "box" | callback function ] the place to get data. Default is "params"
+  + **opts.box**: ["params" | "box" | callback function ] the place to get data. Default is "params"
     box also can be a function, that receives `ctx` as first argument, so you can choose any piece data as you want.
-  + opts.outputType: ["simple" | "json" | "complex"] Default is 'simple'
-  + opts.errorCode: HTTP Error Code. Default is 409
+  + **opts.outputType**: ["simple" | "json" | "complex"] Default is 'simple'
+  + **opts.errorCode**: HTTP Error Code. Default is 409
 
 ### Validation rules:
 
