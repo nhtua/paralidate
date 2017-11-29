@@ -9,34 +9,60 @@ import Parameter from 'parameter';
  * @param {Boolean} noOutDetail: If it's true, ctx will throw the validator errors within the response body. And vice versa.
  * @return {Async Function} A middleware for Koa2
  */
-function paralidate(rule, box, noOutDetail = true) {
+
+function getBox(ctx, box) {
+	if (typeof box == 'function'){
+		return box(ctx);
+	}
+	let source;
+	switch(box) {
+		case 'body':
+			source = ctx.request.body;
+			break;
+		case 'params':
+		default:
+			source = ctx.params;
+	}
+	return source;
+}
+function getData(source, rule) {
+	let keys = Object.keys(rule);
+	let data = {};
+	for(let key of keys){
+		if (source[key] !== undefined){
+			if ( isNaN(source[key]) ) {
+				data[key] = source[key];
+			} else {
+				data[key] = 1*source[key];
+			}
+		}
+	}
+	return data;
+}
+function paralidate(rule = {}, opts = {}) {
+	opts.box = opts.box || 'params';
+	opts.outputType = opts.outputType || 'simple';
+	opts.errorCode = opts.errorCode = 409;
 	let par = new Parameter();
 	return async (ctx, next) => {
 		let data = {}, source;
-		switch(box) {
-			case 'body':
-				source = ctx.request.body;
-				break;
-			case 'params':
-			default:
-				source = ctx.params;
-		}
-		let keys = Object.keys(rule);
-		for(let key of keys){
-			if (source[key] !== undefined){
-				if ( isNaN(source[key]) ) {
-					data[key] = source[key];
-				} else {
-					data[key] = 1*source[key];
-				}
-			}
-		}
+		source = getBox(ctx, opts.box);
+		data = getData(source, rule);
 		let error = par.validate(rule, data);
+		let reqName = typeof opts.box == 'function' ? "Request" : "Request "+opts.box;
 		if (error){
-			if (noOutDetail){
-				ctx.throw(409, "Request "+box+" is invalid.");
-			} else {
-				ctx.throw(409, "Request "+box+" is invalid. \n\nDETAIL\n"+ JSON.stringify(error) );
+			switch(opts.outputType){
+				case 'json':
+					ctx.set('Content-type','application/json');
+					ctx.status = opts.errorCode;
+					ctx.body = JSON.stringify(error);
+					break;
+				case 'complex':
+					ctx.throw(opts.errorCode, reqName+" is invalid. \n\nDETAIL:\n"+ JSON.stringify(error) );
+					break;
+				case 'simple':
+				default:
+					ctx.throw(opts.errorCode, reqName+" is invalid.");
 			}
 		} else {
 			await next();
