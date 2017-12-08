@@ -44,7 +44,7 @@ function getData(source, rule) {
 function paralidate(rule = {}, opts = {}) {
 	opts.box = opts.box || 'params';
 	opts.outputType = opts.outputType || 'simple';
-	opts.errorCode = opts.errorCode = 409;
+	opts.errorCode = opts.errorCode || 400;
 	let par = new Parameter();
 	return async (ctx, next) => {
 		let data = {}, source;

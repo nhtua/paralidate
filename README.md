@@ -2,7 +2,7 @@
 
 Paralidate makes a Koa middelware, which validates the request's data include `ctx.params` and `ctx.request.body`
 If the request is valid then Koa continues run the next() middleware.
-Else, Paralidate stops the request and throw an 409 Http Error.
+Else, Paralidate stops the request and throw an 400 Http Error.
 
 Paralidate uses [Parameter](https://github.com/node-modules/parameter) for validating function.
 
