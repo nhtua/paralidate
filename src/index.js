@@ -22,7 +22,14 @@ function getBox(ctx, box) {
 			source = ctx.request.body;
 			break;
 		case 'query':
-			source = ctx.request.query;
+			let {query} = ctx.request;
+			for(let mykey of Object.keys(query) ){
+				if (!isNaN(query[mykey])){
+					source[mykey] = 1*query[mykey];
+				}else{
+					source[mykey] = query[mykey];
+				}
+			}
 			break;
 		case 'params':
 		default:
