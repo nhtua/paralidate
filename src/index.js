@@ -16,7 +16,7 @@ function getBox(ctx, box) {
 	if (typeof box == 'function'){
 		return box(ctx);
 	}
-	let source;
+	let source = {};
 	switch(box) {
 		case 'body':
 			source = ctx.request.body;
@@ -26,25 +26,36 @@ function getBox(ctx, box) {
 			break;
 		case 'params':
 		default:
-			source = ctx.params;
-			for(let key of Object.keys(source) ){
-				if (!isNaN(source[key])){
-					source[key] = 1*source[key];
+			for(let mykey of Object.keys(ctx.params) ){
+				if (!isNaN(ctx.params[mykey])){
+					source[mykey] = 1*ctx.params[mykey];
+				}else{
+					source[mykey] = ctx.params[mykey];
 				}
 			}
 			break;
 	}
 	return source;
 }
-
+function getData(source, rule) {
+	let keys = Object.keys(rule);
+	let data = {};
+	for(let key of keys){
+		if (source[key] !== undefined){
+			data[key] = source[key];
+		}
+	}
+	return data;
+}
 function paralidate(rule = {}, opts = {}) {
 	opts.box = opts.box || 'params';
 	opts.outputType = opts.outputType || 'simple';
 	opts.errorCode = opts.errorCode || 400;
-	let par = new Parameter();
 	return async (ctx, next) => {
 		let source = getBox(ctx, opts.box);
-		let error = par.validate(rule, source);
+		let data = getData(source, rule);
+		let par = new Parameter();
+		let error = par.validate(rule, data);
 		let reqName = typeof opts.box == 'function' ? "Request" : "Request "+opts.box;
 		if (error){
 			switch(opts.outputType){
