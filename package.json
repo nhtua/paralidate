@@ -1,6 +1,6 @@
 {
   "name": "paralidate",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "description": "Koa params validator",
   "main": "./dist/index.js",
   "scripts": {
