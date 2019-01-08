@@ -1,4 +1,14 @@
 {
-  "presets": ["es2015","stage-2"],
-  "plugins": ["transform-async-to-generator"]
+  "presets": ["@babel/preset-env"],
+  "plugins": [
+    [
+      "@babel/plugin-transform-runtime",
+      {
+        "corejs": false,
+        "helpers": true,
+        "regenerator": true,
+        "useESModules": false
+      }
+    ]
+  ]
 }
